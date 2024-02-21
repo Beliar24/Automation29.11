@@ -8,4 +8,6 @@ import org.aeonbits.owner.Config.Sources;
 @Sources({"classpath:books.properties"})
 public interface BooksConfig extends BaseConfig {
     String getAllBooks();
+    String getBook();
+    String addBook();
 }

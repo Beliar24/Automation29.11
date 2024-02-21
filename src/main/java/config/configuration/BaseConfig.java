@@ -8,4 +8,5 @@ import org.aeonbits.owner.Config;
 @Sources({"classpath:api.properties"})
 public interface BaseConfig extends Config {
     String url();
+    String userId();
 }

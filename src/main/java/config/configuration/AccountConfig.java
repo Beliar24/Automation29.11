@@ -8,5 +8,5 @@ import org.aeonbits.owner.Config.Sources;
 @Sources({"classpath:account.properties"})
 public interface AccountConfig extends BaseConfig {
     String generateToken();
-    String userId();
+    String getUser();
 }
