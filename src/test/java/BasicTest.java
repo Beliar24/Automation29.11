@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BasicTest {
 
-    private final String BOOK_TITLE = "Programming JavaScript Applications";
+    private final String BOOK_TITLE = "You Don't Know JS";
 
     @Test
     void shouldBeUserReturned() {

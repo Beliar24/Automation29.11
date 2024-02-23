@@ -1,19 +1,24 @@
 package steps;
 
+import config.base.requestImpl.CommonRequestHandler;
 import config.configuration.AccountConfig;
 import dto.response.account.GetUserResponseDTO;
 
-import static config.base.Requests.get;
 import static config.specification.ResponseSpec.ok;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.aeonbits.owner.ConfigFactory.create;
 import static org.aeonbits.owner.ConfigFactory.getProperties;
 
 public class UserSteps {
 
     private final AccountConfig config = create(AccountConfig.class, getProperties());
+    private final CommonRequestHandler request = new CommonRequestHandler();
 
     public GetUserResponseDTO getUser() {
-        return get(config.getUser(), config.userId()).spec(ok()).extract().as(GetUserResponseDTO.class);
+        return request.get(config.getUser(), config.userId())
+                .spec(ok())
+                .body(matchesJsonSchemaInClasspath("schemas/GetUserJsonSchema.json"))
+                .extract().as(GetUserResponseDTO.class);
     }
 
 }

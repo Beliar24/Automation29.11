@@ -1,12 +1,12 @@
 package config.specification;
 
+import config.base.requestImpl.BaseRequestHandler;
 import config.configuration.AccountConfig;
 import dto.response.account.GenerateTokenResponseDTO;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.http.Header;
 import io.restassured.specification.RequestSpecification;
 
-import static config.base.Requests.postForToken;
 import static config.builders.UserBuilders.user;
 import static config.specification.ResponseSpec.ok;
 import static io.restassured.RestAssured.given;
@@ -22,11 +22,12 @@ import static org.aeonbits.owner.ConfigFactory.getProperties;
 public class RequestSpec {
 
     private static final AccountConfig config = create(AccountConfig.class, getProperties());
+    private static final BaseRequestHandler request = new BaseRequestHandler();
     private static final String URL = config.url();
     private static String token = null;
 
     public static RequestSpecification commonSpecRequest() {
-        return baseSpecRequest()
+        return baseSpec(URL)
                 .filters(
                 new RequestLoggingFilter(METHOD),
                 new RequestLoggingFilter(URI),
@@ -36,9 +37,17 @@ public class RequestSpec {
     }
 
     public static RequestSpecification baseSpecRequest() {
+        return baseSpec(URL)
+                .filters(
+                        new RequestLoggingFilter(METHOD),
+                        new RequestLoggingFilter(URI),
+                        new RequestLoggingFilter(PARAMS));
+    }
+
+    private static RequestSpecification baseSpec(String url) {
         return given()
                 .relaxedHTTPSValidation()
-                .baseUri(URL)
+                .baseUri(url)
                 .accept(JSON)
                 .contentType(JSON);
     }
@@ -53,6 +62,6 @@ public class RequestSpec {
     }
 
     private static String getToken() {
-        return postForToken(user(), config.generateToken()).spec(ok()).extract().as(GenerateTokenResponseDTO.class).getToken();
+        return request.post(user(), config.generateToken()).spec(ok()).extract().as(GenerateTokenResponseDTO.class).getToken();
     }
 }
