@@ -4,6 +4,7 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
 
 import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_NO_CONTENT;
 import static org.apache.http.HttpStatus.SC_OK;
 
 public class ResponseSpec {
@@ -17,6 +18,12 @@ public class ResponseSpec {
     public static ResponseSpecification created() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(SC_CREATED)
+                .build();
+    }
+
+    public static ResponseSpecification noContent() {
+        return new ResponseSpecBuilder()
+                .expectStatusCode(SC_NO_CONTENT)
                 .build();
     }
 }

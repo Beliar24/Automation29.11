@@ -8,6 +8,7 @@ import dto.response.books.IsbnResponseDTO;
 
 import static config.builders.BookBuilders.book;
 import static config.specification.ResponseSpec.created;
+import static config.specification.ResponseSpec.noContent;
 import static config.specification.ResponseSpec.ok;
 import static org.aeonbits.owner.ConfigFactory.create;
 import static org.aeonbits.owner.ConfigFactory.getProperties;
@@ -27,5 +28,9 @@ public class BookSteps {
 
     public IsbnResponseDTO addBookIntoUser(String isbn) {
         return request.post(book(config.userId(), isbn), config.addBook()).spec(created()).extract().as(IsbnResponseDTO.class);
+    }
+
+    public void deleteBook() {
+        request.delete(config.deleteBook(), config.userId()).spec(noContent());
     }
 }

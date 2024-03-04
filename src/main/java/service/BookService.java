@@ -18,4 +18,13 @@ public class BookService {
                 .findFirst()
                 .orElseThrow(() -> new BookNotFoundException(format("Book - %s is not found", title)));
     }
+
+    public Boolean checkIsbnBook(String title) {
+        var books = book.getAllBooks().getBooks();
+        return books.stream()
+                .filter(bookTitle -> bookTitle.getTitle().equals(title))
+                .map(BookResponseDTO::getIsbn)
+                .findFirst()
+                .isEmpty();
+    }
 }

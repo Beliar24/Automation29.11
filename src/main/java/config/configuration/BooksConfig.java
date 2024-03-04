@@ -10,4 +10,5 @@ public interface BooksConfig extends BaseConfig {
     String getAllBooks();
     String getBook();
     String addBook();
+    String deleteBook();
 }
