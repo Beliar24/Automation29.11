@@ -5,6 +5,7 @@ import config.configuration.BooksConfig;
 import dto.response.books.BookResponseDTO;
 import dto.response.books.BooksResponseDTO;
 import dto.response.books.IsbnResponseDTO;
+import io.qameta.allure.Step;
 
 import static config.builders.BookBuilders.book;
 import static config.specification.ResponseSpec.created;
@@ -26,10 +27,12 @@ public class BookSteps {
         return request.get(config.getBook(), isbn).spec(ok()).extract().as(BookResponseDTO.class);
     }
 
+    @Step("Add book into user using isbn -> {isbn}")
     public IsbnResponseDTO addBookIntoUser(String isbn) {
         return request.post(book(config.userId(), isbn), config.addBook()).spec(created()).extract().as(IsbnResponseDTO.class);
     }
 
+    @Step("Delete all book from user")
     public void deleteBook() {
         request.delete(config.deleteBook(), config.userId()).spec(noContent());
     }

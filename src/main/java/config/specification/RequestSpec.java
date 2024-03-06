@@ -1,14 +1,11 @@
 package config.specification;
 
-import config.base.requestImpl.BaseRequestHandler;
 import config.configuration.AccountConfig;
-import dto.response.account.GenerateTokenResponseDTO;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.http.Header;
 import io.restassured.specification.RequestSpecification;
 
-import static config.builders.UserBuilders.user;
-import static config.specification.ResponseSpec.ok;
+import static config.base.token.GenerateToken.getToken;
 import static io.restassured.RestAssured.given;
 import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.METHOD;
@@ -22,9 +19,7 @@ import static org.aeonbits.owner.ConfigFactory.getProperties;
 public class RequestSpec {
 
     private static final AccountConfig config = create(AccountConfig.class, getProperties());
-    private static final BaseRequestHandler request = new BaseRequestHandler();
     private static final String URL = config.url();
-    private static String token = null;
 
     public static RequestSpecification commonSpecRequest() {
         return baseSpec(URL)
@@ -53,15 +48,6 @@ public class RequestSpec {
     }
 
     private static Header getAccessToken() {
-        Header header = null;
-        if (token == null) {
-            token = getToken();
-        }
-        header = new Header("Authorization", format("Bearer %s", token));
-        return header;
-    }
-
-    private static String getToken() {
-        return request.post(user(), config.generateToken()).spec(ok()).extract().as(GenerateTokenResponseDTO.class).getToken();
+        return new Header("Authorization", format("Bearer %s", getToken()));
     }
 }

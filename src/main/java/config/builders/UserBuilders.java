@@ -6,8 +6,10 @@ public class UserBuilders {
 
     public static GenerateTokenRequestDTO user() {
         return GenerateTokenRequestDTO.builder()
-                .userName("user15")
-                .password("123456Qa!")
+                .userName(System.getProperty("username"))
+                .password(System.getProperty("password"))
                 .build();
     }
 }
+//123456Qa!
+//user15

@@ -1,5 +1,11 @@
 import dto.response.books.BookResponseDTO;
 import exceptions.BookNotFoundException;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Flaky;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
+import io.qameta.allure.Story;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,7 +16,7 @@ import steps.UserSteps;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Epic("This is general epic")
 public class BasicTest {
 
     @BeforeMethod(groups = {"Regression", "Smoke", "Api"})
@@ -18,13 +24,17 @@ public class BasicTest {
         new BookSteps().deleteBook();
     }
 
-    @Test(groups = {"Regression", "Api"})
+    @Test(description = "Get user with book or not", groups = {"Regression", "Api"})
+    @Story("[1232-xml] As a user I want to get my own book user")
+    @Link(name = "[1234-xml]", url = "https://google.com")
+    @Issue("AUTH-123")
     void shouldBeUserReturned() {
         var user = new UserSteps().getUser();
         assertThat(user.getUsername()).as("Username is not correct").isEqualTo("user15");
     }
 
     @Test(dataProvider = "Books", groups = {"Smoke", "Api"})
+    @Flaky
     void shouldBeAddedOneBookIntoUser(String booksTitle) {
         var isbn = new BookService().getIsbnOfBook(booksTitle);
 
