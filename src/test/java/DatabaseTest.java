@@ -1,9 +1,7 @@
-import db.dao.User;
 import db.repository.UserRepositoryImpl;
 import org.testng.annotations.Test;
 
 public class DatabaseTest extends BaseTest {
-
     @Test
     void checkSqlQuery() {
 

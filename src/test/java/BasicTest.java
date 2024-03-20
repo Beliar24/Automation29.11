@@ -1,6 +1,5 @@
-import dto.response.books.BookResponseDTO;
-import exceptions.BookNotFoundException;
-import io.qameta.allure.Description;
+import api.dto.response.books.BookResponseDTO;
+import api.exceptions.BookNotFoundException;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Flaky;
 import io.qameta.allure.Issue;
@@ -9,9 +8,9 @@ import io.qameta.allure.Story;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import service.BookService;
-import steps.BookSteps;
-import steps.UserSteps;
+import api.service.BookService;
+import api.steps.BookSteps;
+import api.steps.UserSteps;
 
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
