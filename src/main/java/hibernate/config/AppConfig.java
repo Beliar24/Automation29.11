@@ -1,4 +1,4 @@
-package hibernate;
+package hibernate.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
