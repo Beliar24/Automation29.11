@@ -1,4 +1,6 @@
-package hibernate;
+package hibernate.dao;
+
+import hibernate.entity.Singer;
 
 import java.util.List;
 

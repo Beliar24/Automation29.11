@@ -1,5 +1,7 @@
-package hibernate;
+package hibernate.repositories;
 
+import hibernate.dao.SingerDao;
+import hibernate.entity.Singer;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,20 +30,23 @@ public class SingerDaoImpl implements SingerDao {
 
     @Override
     public Singer findById(Long id) {
-        return null;
+        return (Singer) sessionFactory.getCurrentSession().createQuery("select s from Singer s left join fetch s.albums a" +
+                        " left join fetch s.instruments i where s.id = :id")
+                .setParameter("id", id).uniqueResult();
     }
 
     @Override
     public Singer save(Singer singer) {
-        return null;
+        sessionFactory.getCurrentSession().save(singer);
+        return singer;
     }
 
     public void update(Singer singer) {
-
+        sessionFactory.getCurrentSession().update(singer);
     }
 
     @Override
     public void delete(Singer singer) {
-
+        sessionFactory.getCurrentSession().delete(singer);
     }
 }

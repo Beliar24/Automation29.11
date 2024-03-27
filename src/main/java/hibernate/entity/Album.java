@@ -1,4 +1,4 @@
-package hibernate;
+package hibernate.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Album implements Serializable {
     private Date releaseDate;
     private Singer singer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SINGER_ID")
     public Singer getSinger() {
         return singer;

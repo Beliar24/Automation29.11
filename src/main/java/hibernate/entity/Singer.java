@@ -1,4 +1,4 @@
-package hibernate;
+package hibernate.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ public class Singer implements Serializable {
     private Set<Album> albums = new HashSet<>();
     private Set<Instrument> instruments = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "singer_instrument", joinColumns = @JoinColumn(name = "SINGER_ID"),
     inverseJoinColumns = @JoinColumn(name = "INSTRUMENT_ID"))
     public Set<Instrument> getInstruments() {
@@ -41,7 +41,7 @@ public class Singer implements Serializable {
         this.instruments = instruments;
     }
 
-    @OneToMany(mappedBy = "singer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "singer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     public Set<Album> getAlbums() {
         return albums;
     }
@@ -96,6 +96,18 @@ public class Singer implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +
+                ", albums=" + albums +
+                ", instruments=" + instruments +
                 '}';
     }
+
+//    @Override
+//    public String toString() {
+//        return "Singer{" +
+//                "id=" + id +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", birthDate=" + birthDate +
+//                '}';
+//    }
 }
